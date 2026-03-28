@@ -76,7 +76,7 @@ function OpeningScreen({ onStart }: { onStart: () => void }) {
         
         <motion.button
           onClick={onStart}
-          className="relative z-50 text-2xl md:text-3xl text-[#ffaa00] hover:text-white tracking-widest font-display cursor-pointer pointer-events-auto"
+          className="relative z-50 text-2xl md:text-3xl text-red-500 hover:text-white tracking-widest font-display cursor-pointer pointer-events-auto drop-shadow-[0_0_10px_rgba(239,68,68,0.8)]"
           animate={{ opacity: [1, 0, 1], scale: [1, 1.05, 1] }}
           transition={{ repeat: Infinity, duration: 0.6 }}
         >
