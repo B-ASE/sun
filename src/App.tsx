@@ -219,7 +219,7 @@ function HeroSection() {
         </div>
         
         <div className="biker-box max-w-2xl w-full mb-10">
-          <p className="text-lg md:text-xl text-gray-300 leading-relaxed font-sans">
+          <p className="text-lg md:text-xl text-gray-300 leading-relaxed font-sans drop-shadow-[0_0_10px_rgba(255,170,0,0.6)]">
             끝없는 고속도로, 계속되는 황혼.<br/>
             속도의 저편, 죽음을 넘어 달려라.
           </p>
@@ -260,7 +260,7 @@ function WorldviewSection() {
 
   return (
     <section className="animate-in fade-in duration-500">
-      <h3 className="text-3xl md:text-5xl text-center mb-12 font-display text-white tracking-widest">
+      <h3 className="text-3xl md:text-5xl text-center mb-12 font-display text-white tracking-widest drop-shadow-[0_0_10px_rgba(255,170,0,0.6)]">
         <span> WORLDVIEW </span>
       </h3>
       
@@ -324,16 +324,16 @@ function WorldviewSection() {
 }
 
 function CharacterSection() {
-  const [activeFaction, setActiveFaction] = useState('나카츠리');
+  const [activeFaction, setActiveFaction] = useState('전체');
   const [selectedChar, setSelectedChar] = useState<any>(null);
 
-  const factions = ["나카츠리", "원스휴먼", "에센티아", "B.A.221 사무소", "괴이"];
+  const factions = ["전체", "나카츠리", "원스휴먼", "에센티아", "B.A.221 사무소", "괴이"];
 
   const charactersData: Record<string, any[]> = {
     "나카츠리": [
       { name: "겐류", gender: "男", age: "27", appearance: "금발, 단발", outfit: "선글라스, 알로하 셔츠, 갈색 바지", 
       personality: "분위기 메이커, 활발함, 사교성 좋음, 이상주의", 
-      traits: "나카츠리 소속의 괴이 사냥꾼./활발한 성격에 사교성도 좋아 분위기 메이커로서의 역할을 주로 맡으며, 이상적인 이야기를 바라는 경향이 있어 항상 해피엔딩을 추구한다./전투에서는 리볼버를 이용한 속사로 공격하거나, 다양한 도구를 이용해 타인을 보조한다.", 
+      traits: "나카츠리 소속의 괴이 사냥꾼.//활발한 성격에 사교성도 좋아 분위기 메이커의 역할을 주로 맡으며, 이상적인 이야기를 바라는 경향이 있어 항상 해피엔딩을 추구한다.//전투에서는 리볼버를 이용한 속사로 공격하거나, 다양한 도구를 이용해 타인을 보조한다.", 
       combat: "리볼버를 사용한 속사, 다양한 도구를 이용한 보조", 
       speech: "반말(해체), 웃음소리는 '냐하항'", 
       quote: "냐하하하항! 죽을 뻔 했네!", 
@@ -342,21 +342,21 @@ function CharacterSection() {
     "원스휴먼": [
       { name: "닉스", gender: "女", age: "18", appearance: "백발, 장발, 별빛처럼 반짝이는 머리카락, 적안", outfit: "흰색 민소매 원피스, 안쪽이 별하늘처럼 된 흰색 양산", 
       personality: "겉:(솔직하지 못함, 냉담함, 냉소적임, 무관심함), 속:(순수함, 다정함, 자비로움, 온화함)", 
-      traits: "원스휴먼의 수장이자 성녀, 완벽한 인간에 가장 가까운 실패작, 겉으로는 까칠하고 냉소적인 태도를 보이나, 내면에는 항상 타인을 생각하는 다정함을 지님, 중립파", 
+      traits: "원스휴먼의 수장이자 성녀. 중립파.//솔직하지 못한 성격이라 겉으로는 까칠하고 냉소적인 태도를 보이나, 내면에는 항상 타인을 생각하는 다정함을 지녔다.//무한한 마력을 통해 수많은 마법을 구사한다.", 
       combat: "무한한 마력을 통한 수많은 마법을 구사", 
       speech: "반말(해라체), 까칠하면서도 부드러움", 
       quote: "그런다고 뭐가 되겠니? 의미 없는 짓은 하지 말렴.", 
       code: "D" },
       { name: "루이나", gender: "女", age: "19", appearance: "하늘색 꽁지머리, 청안, 흰색 십자동공", outfit: "흰색 캐미솔, 검은색 자켓, 찢어진 청바지", 
       personality: "외향적, 털털함, 낙천적, 자유분방함, 즉흥적, 예의없음", 
-      traits: "루온과 남매, 집단의 규율에 얽매이지 않음, 의외로 신앙심이 뛰어남, 중립파", 
+      traits: "원스휴먼의 중립파. 루온과는 남매 사이.//활발하고 수다스러운데다 자유분방한 성격으로,/집단의 규율에 얽매이지 않으나 의외로 신앙심은 뛰어나다.//전투에선 손에 마력을 둘러 클로를 만들어 내 육탄전을 벌인다.", 
       combat: "손에 마력을 둘러 클로를 만들어 내 육탄전을 벌임", 
       speech: "반말(해체), 활발하고 수다스러움, 닉스에겐 존댓말(해요체)", 
       quote: "안녕~! 오늘도 좋은 하루야!", 
       code: "E" },
       { name: "루온", gender: "男", age: "19", appearance: "회색 올백머리, 청안", outfit: "흰색 셔츠, 데님 셔츠, 갈색 바지", 
       personality: "친절함, 대범함, 단정함, 예의바름, 눈치없음", 
-      traits: "루이나의 남매, 규율중시, 루이나에겐 무르면서 허물없음, 가급적이면 대화로 해결하려 하나, 전투도 마다하지 않음, 중립파", 
+      traits: "원스휴먼의 중립파. 루이나와는 남매 사이.//부드럽고 온화한 성격으로 규율을 중시하며,/문제가 발생할 경우 가급적이면 대화로 해결하려고 한다.//다만, 항상 루이나에겐 무르면서도 허물없는 모습을 보인다.//전투에서는 카타나를 사용해 속도전을 벌인다.", 
       combat: "카타나를 사용한 속도전", 
       speech: "반말(해체), 부드럽고 온화함, 닉스에겐 존댓말(다나까체)", 
       quote: "반가워. 잘 부탁할게.", 
@@ -365,14 +365,14 @@ function CharacterSection() {
     "에센티아": [
       { name: "바엘", gender: "男", age: "불명", appearance: "검정색 울프컷, 백안, 파문형태의 동공, 중년", outfit: "검은색 정장, 검은색 코트, 금색 테두리", 
       personality: "구시대적, 결단적, 독불장군, 무인, 말수가 적음, 무력 중시, 약자 멸시, 강자 존중, 강압적임", 
-      traits: "괴이, 에센티아의 수장", 
+      traits: "에센티아의 수장이자 괴이.//구시대적인 면모를 지닌 무인으로,/무력을 중시해 강자를 존중하고 약자를 멸시한다.//강압적이고 독불장군의 성향으로,/말수도 적어 실질적인 조직 관리는 제라에게 맡기고 있다.//에센티아의 수장다운 무력을 지니고 있으며,/검, 창, 도끼 등 다양한 냉병기를 마력으로 만들어내 능숙하게 다룬다.", 
       combat: "검, 창, 활, 도끼 등, 다양한 냉병기를 마력으로 만들어내 능숙하게 사용함", 
       speech: "반말(해라체), 무뚝뚝하고 간결함, 예스러운 어미", 
       quote: "강함이야말로 절대적일진저.", 
       code: "G" },
       { name: "제라", gender: "女", age: "불명", appearance: "반투명 백발, 장발, 청색의 시크릿 투톤 헤어, 청안", outfit: "검은색 드레스, 검은색 보닛", 
       personality: "어른스러움, 온화함, 잔혹함, 예의바름, 인간에게 호의적", 
-      traits: "괴이, 에센티아의 부수장, 무력과 카리스마 외엔 부족한 게 많은 바엘 대신 다양한 업무를 총괄함, 약자에게도 강해질 기회를 줌, 공적으로는 강함과 카리스마를 겸비한 바엘을 존경하나, 사적으로는 무력 외가 부족한 바엘을 한심하게 봄", 
+      traits: "에센티아의 부수장이자 괴이./인간에게 호의적인 면모를 보인다.//어른스러운데다 온화하고 예의바른 성격으로,/바엘을 대신해 에센티아의 다양한 업무를 총괄하고 있다.//약자에게도 강해질 기회를 주는 자비로운 면모를 보이나,/동시에 타인을 가차 없이 죽일 수 있는 잔혹함도 겸비하고 있다.//그런 잔혹성 때문인지 환술, 정신계 마법을 통해 상대의 고통을 최대한 이끌어내는 마법을 구사한다.", 
       combat: "환술/정신계 마법을 통해 상대에게 이상한 정보, 풍경을 보여주어 혼란시킴, 상대의 고통을 최대한 이끌어내는 마법 구사", 
       speech: "존댓말(해요체), 나긋나긋하고 온화함", 
       quote: "어머나, 정말로 괜찮으시겠어요?", 
@@ -381,14 +381,14 @@ function CharacterSection() {
     "B.A.221 사무소": [
       { name: "알레나", gender: "女", age: "22", appearance: "금발, 장발, 연한 갈색 눈", outfit: "흰색 셔츠, 청색 조끼, 갈색 코트", 
       personality: "외강내유, 겉:(외향적, 자신감 넘침, 열정적임, 활기참, 주도적, 대범함, 즉흥적, 거만함), 속:(내향적, 신중함, 선량함, 비관적임, 소심함, 자신감 없음)", 
-      traits: "벤자민의 소꿉친구, 이상적인 모습을 위해 허풍을 부림, 의기소침할 때만 내면을 드러냄, 탐정 포지션", 
+      traits: "B.A.221 사무소의 소장이자 탐정. 조수인 벤자민과는 소꿉친구.//항상 겉으로는 자신감 넘치고 즉흥적이고 거만한 모습을 보이나 이는 스스로 이상적인 모습을 보이기 위해 허풍을 부리는 것으로, 실제로는 자신감 없고 신중한 성격이다.//전투 능력은 없기에, 전투 시엔 전황을 살피고 분석해 보조한다.", 
       combat: "직접적인 전투 능력이 없어 전황을 살피고 분석해 보조함", 
       speech: "반말(해체), 자신감 넘치고 강단 있음, 의기소침할 땐 자신감 없고 소심함", 
       quote: "자, 이번 사건의 진상은 바로 이거다!", 
       code: "I" },
-      { name: "벤자민", gender: "男", age: "22", appearance: "갈색 단발, 한쪽 가르마, 갈색 눈, 다크서클, 온화한 인상", outfit: "흰색 셔츠, 갈색 조끼, 갈색 바지", 
+      { name: "벤자민", gender: "男", age: "22", appearance: "갈색 단발, 가르마, 갈색 눈, 다크서클, 온화한 인상", outfit: "흰색 셔츠, 갈색 조끼, 갈색 바지", 
       personality: "외유내강, 차분함, 상냥함, 어른스러움, 온화함, 예의바름, 단정함", 
-      traits: "알레나의 소꿉친구, 절름발이, 정돈되고 깔끔한 차림새, 별명은 왓슨, 조수 포지션", 
+      traits: "B.A.221 사무소 소속이자 조수. 탐정인 알레나와는 소꿉친구.//차분하고 어른스러운 성격으로,/항상 다른 사람들에게 정중하고 예의바르게 대한다.//또한, 절름발이지만 롱소드를 이용한 상대의 힘을 이용하는 방어적인 검법을 구사할 줄 알기에, 전투가 필요할 땐 전투 능력이 없는 알레나를 대신하여 움직이는 경우가 잦다.", 
       combat: "롱소드를 이용한 방어적인 검법/상대의 힘을 이용하는 검법을 사용", 
       speech: "존댓말(해요체+하십시오체), 정중하고 차분함, 알레나에겐 반말(해체)", 
       quote: "오늘도 수고 많았어, 알레나.", 
@@ -397,14 +397,14 @@ function CharacterSection() {
     "괴이": [
       { name: "황혼의 질주자", gender: "男", age: "불명", appearance: "해골 머리", outfit: "불꽃으로 이루어진 스카프, 검은색 가죽자켓, 검은색 가죽바지, 가죽 장갑", 
       personality: "ESTP, 폭주족, 속도광, 경쟁심, 레이스 중시, 두려움과 공포 없음", 
-      traits: "최근에 탄생한 괴이./끝없는 속도를 추구해 폭주하면서 타인과의 1:1 경주를 통해 속도를 겨루는 걸 즐긴다.", 
+      traits: "최근에 탄생한 괴이.//끝없는 속도를 추구해 폭주하고 있으며,/타인과의 1:1 경주를 통해 속도를 겨루는 걸 즐긴다.", 
       combat: "불꽃 마법+속도를 살려 정신없이 몰아붙임", 
       speech: "반말(해체)", 
       quote: "데려가 주마, 스피드의 저편으로!", 
       code: "C" },
-      { name: "나일레모나", gender: "女", age: "불명", appearance: "흑발, 은색의 시크릿 투톤 헤어", outfit: "흰색 셔츠, 흑색 원피스, 나비 머리핀", 
+      { name: "나일레모나", gender: "女", age: "불명", appearance: "흑발, 은색의 시크릿 투톤 헤어, 백안", outfit: "흰색 셔츠, 흑색 원피스, 나비 머리핀", 
       personality: "ENFP, 짓궃음, 장난기 많음, 가챠 중독, 혼돈", 
-      traits: "'재밌는 이야기를 보여줄 것'을 조건으로 겐류와 계약한 괴이./짓궃고 장난기 많은 성격에 가챠 중독의 성향까지 있어 항상 혼돈스러운 일을 벌이나, 장난을 치더라도 선은 넘지 않는 편이다./전투에서는 주사위를 굴려 랜덤한 디버프를 부여하는 마법을 사용해 보조한다.", 
+      traits: "'재밌는 이야기를 보여줄 것'을 조건으로 겐류와 계약한 괴이.//짓궃고 장난기 많은 성격에 가챠 중독의 성향까지 있어 항상 혼돈스러운 일을 벌이나, 장난을 치더라도 선은 넘지 않는 편이다.//전투에서는 주사위를 굴려 랜덤한 디버프를 부여하는 마법을 사용해 보조한다.", 
       combat: "주사위를 굴려서 랜덤한 디버프를 부여할 수 있는 마법 사용해 보조", 
       speech: "존댓말(해요체)", 
       quote: "자! 신나는 가챠 타임! 이번에 나올 눈은 과연 뭘까요!?", 
@@ -412,9 +412,13 @@ function CharacterSection() {
     ]
   };
 
+  const displayedCharacters = activeFaction === '전체' 
+    ? Object.values(charactersData).flat() 
+    : charactersData[activeFaction];
+
   return (
     <section className="animate-in fade-in duration-500">
-      <h3 className="text-3xl md:text-5xl text-center mb-16 font-display text-white tracking-widest">
+      <h3 className="text-3xl md:text-5xl text-center mb-16 font-display text-white tracking-widest drop-shadow-[0_0_10px_rgba(255,170,0,0.6)]">
         <span> CHARACTERS </span>
       </h3>
       
@@ -432,9 +436,9 @@ function CharacterSection() {
 
       <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <AnimatePresence mode="wait">
-          {charactersData[activeFaction].map((c, i) => (
+          {displayedCharacters.map((c, i) => (
             <motion.div 
-              key={`${activeFaction}-${i}`}
+              key={c.code}
               onClick={() => setSelectedChar(c)}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -520,9 +524,8 @@ function CharacterSection() {
                       <span className="text-[#ffaa00] font-bold tracking-widest">복장</span>
                       <span className="text-gray-300 leading-relaxed">{selectedChar.outfit}</span>
                     </div>
-                    <div className="grid grid-cols-[60px_1fr] gap-4">
-                      <span className="text-[#ffaa00] font-bold tracking-widest">설명</span>
-                      <span className="text-gray-300 leading-relaxed">
+                    <div className="text-center pt-2">
+                      <span className="text-gray-300 leading-relaxed text-[15px]">
                         {selectedChar.traits.split('/').map((trait: string, index: number, array: string[]) => (
                           <React.Fragment key={index}>
                             {trait.trim()}{index < array.length - 1 && <><br/></>}
@@ -550,7 +553,7 @@ function CharacterSection() {
 function WebtoonSection() {
   return (
     <section className="animate-in fade-in duration-500">
-      <h3 className="text-3xl md:text-5xl text-center mb-16 font-display text-white tracking-widest">
+      <h3 className="text-3xl md:text-5xl text-center mb-16 font-display text-white tracking-widest drop-shadow-[0_0_10px_rgba(255,170,0,0.6)]">
         <span> WEBTOON </span>
       </h3>
       <div className="max-w-3xl mx-auto biker-box !p-2 md:!p-4 bg-[#050505]">
