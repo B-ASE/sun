@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@1.530/neodgm/style.css');
+@import "tailwindcss";
+
+@theme {
+  --font-pixel: "NeoDunggeunmo", monospace;
+  --font-display: "Black Han Sans", sans-serif;
+}
+
+body {
+  font-family: "NeoDunggeunmo", monospace;
+  background-color: #0a0a0c;
+  background-image: radial-gradient(circle at 50% 0%, #4a1500 0%, #0a0a0c 70%);
+  background-attachment: fixed;
+  color: #e0e0e0;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.title-text {
+  font-family: "Black Han Sans", sans-serif;
+  color: #111;
+  -webkit-text-stroke: 1.5px #fff;
+  text-shadow: 0 0 10px #ccff00, 0 0 20px #ccff00, 0 0 40px #ccff00;
+  transform: skewX(-5deg);
+}
+
+.biker-box {
+  background-color: rgba(15, 15, 18, 0.85);
+  border: 1px solid #333;
+  position: relative;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+
+.biker-box::before, .biker-box::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #fff;
+  pointer-events: none;
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+}
+.biker-box::before {
+  top: -2px; left: -2px;
+  border-right: none; border-bottom: none;
+}
+.biker-box::after {
+  bottom: -2px; right: -2px;
+  border-left: none; border-top: none;
+}
+
+.biker-button {
+  background-color: #0a0a0c;
+  border: 2px solid #ccff00;
+  color: #ccff00;
+  padding: 0.75rem 2rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  font-family: "Black Han Sans", sans-serif;
+  transform: skewX(-10deg);
+}
+
+.biker-button:hover {
+  background-color: #ccff00;
+  color: #000;
+  box-shadow: 0 0 20px rgba(204, 255, 0, 0.6);
+}
+
+.biker-button span {
+  display: inline-block;
+  transform: skewX(10deg);
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0a0a0c; }
+::-webkit-scrollbar-thumb { background: #ccff00; }
+::-webkit-scrollbar-thumb:hover { background: #fff; }
