@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      try {
+        const originalFetch = window.fetch;
+        Object.defineProperty(window, 'fetch', {
+          value: originalFetch,
+          writable: true,
+          configurable: true
+        });
+        console.log("Defined window.fetch");
+      } catch (e) {
+        console.warn('Failed to make fetch writable', e);
+      }
+    </script>
+    <script type="module">
+      window.fetch = function() { console.log("fetch called"); };
+      console.log("Assigned window.fetch");
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

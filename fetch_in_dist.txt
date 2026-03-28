@@ -1,0 +1,23 @@
+p)return;d.ep=!0;const p=r(d);fetch(d.href,p)}})();var ty={export
+ 0):b=null,T.d.C(S,b))},Kt.prefetchDNS=function(S){if(typeof S!="
+!S)console.error("ReactDOM.prefetchDNS(): Expected the `href` arg
+")?console.error("ReactDOM.prefetchDNS(): Expected only one argum
+fect. Try calling ReactDOM.prefetchDNS() with just a single strin
+)):console.error("ReactDOM.prefetchDNS(): Expected only one argum
+owed. Try calling ReactDOM.prefetchDNS() with just a single strin
+b.integrity:void 0,H=typeof b.fetchPriority=="string"?b.fetchPrio
+ 0,{crossOrigin:V,integrity:q,fetchPriority:H}):w==="script"&&T.d
+(S,{crossOrigin:V,integrity:q,fetchPriority:H,nonce:typeof b.nonc
+.type=="string"?b.type:void 0,fetchPriority:typeof b.fetchPriorit
+y=="string"?b.fetchPriority:void 0,referrerPolicy
+ceiveProps(). If you meant to fetch data or run side-effects or m
+  async function fetchData() {
+  fetchData();
+Learn more about data fetching with Hooks: https://react.
+dev/link/hooks-data-fetching`:" You returned: "+a,oe(t,
+",enterkeyhint:"enterKeyHint",fetchpriority:"fetchPriority",for:"
+* Move data fetching code or side effects to co
+* Move data fetching code or side effects to co
+* Move data fetching code or side effects to co
+* Move data fetching code or side effects to co
+unction(e){gi.D(e),aS("dns-prefetch",e,null)},C:function(e,t){gi.

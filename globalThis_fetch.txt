@@ -1,0 +1,2 @@
+node_modules/node-fetch/README.md:155:if (!globalThis.fetch) {
+node_modules/node-fetch/README.md:156:  globalThis.fetch = fetch

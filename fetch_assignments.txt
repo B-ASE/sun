@@ -1,0 +1,3 @@
+node_modules/@protobufjs/fetch/tests/index.js:3:var fetch = require("..");
+node_modules/p-retry/readme.md:17:const fetch = require('node-fetch');
+node_modules/node-fetch/README.md:133:const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));

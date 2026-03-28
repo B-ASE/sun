@@ -1,0 +1,7 @@
+node_modules/@protobufjs/fetch/tests/index.js:var fetch = require("..");
+node_modules/protobufjs/src/root.js:Root.prototype.fetch = util.fetch;
+node_modules/p-retry/readme.md:const fetch = require('node-fetch');
+node_modules/node-fetch/README.md:const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+node_modules/node-fetch/README.md:  globalThis.fetch = fetch
+node_modules/formdata-polyfill/FormData.js:  const _fetch = global.Request && global.fetch
+node_modules/formdata-polyfill/FormData.js:    global.fetch = function (input, init) {
