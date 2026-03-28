@@ -71,7 +71,14 @@ function OpeningScreen({ onStart }: { onStart: () => void }) {
           animate={{ scale: 1, opacity: 1, skewX: 0, x: 0 }}
           transition={{ duration: 0.7, type: "spring", stiffness: 150, damping: 15 }}
         >
-          <img src="https://s.tpvp.uk/SITE/image/title.webp" alt="황혼을 넘어 달려라" className="w-full h-auto drop-shadow-[0_0_20px_rgba(255,170,0,0.6)]" referrerPolicy="no-referrer" />
+          <motion.img 
+            src="https://s.tpvp.uk/SITE/image/title.webp" 
+            alt="황혼을 넘어 달려라" 
+            className="w-full h-auto drop-shadow-[0_0_20px_rgba(255,170,0,0.6)]" 
+            referrerPolicy="no-referrer" 
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ repeat: Infinity, duration: 1.2 }}
+          />
         </motion.div>
         
         <motion.button
