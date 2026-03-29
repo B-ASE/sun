@@ -448,9 +448,8 @@ function CharacterSection() {
               key={c.code}
               onClick={() => setSelectedChar(c)}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3, delay: i * 0.1 }}
+              animate={{ opacity: 1, y: 0, transition: { duration: 0.3, delay: i * 0.05 } }}
+              exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
               className="biker-box flex flex-col items-center p-4 cursor-pointer group hover:border-[#ffaa00] transition-colors"
             >
               <div className="w-full aspect-[3/4] bg-[#050505] border border-[#333] group-hover:border-[#ffaa00] transition-colors overflow-hidden relative flex items-center justify-center mb-4">
