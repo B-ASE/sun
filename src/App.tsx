@@ -139,6 +139,7 @@ function MainContent({ volume, setVolume }: { volume: number, setVolume: (v: num
           <Route path="/worldview" element={<WorldviewSection />} />
           <Route path="/characters" element={<CharacterSection />} />
           <Route path="/webtoon" element={<WebtoonSection />} />
+          <Route path="/image" element={<ImageSection />} />
         </Routes>
       </main>
     </div>
@@ -163,6 +164,7 @@ function Header({ volume, setVolume }: { volume: number, setVolume: (v: number) 
           <Link to="/worldview" className={`transition-colors ${currentPath === '/worldview' ? 'text-[#ffaa00]' : 'text-gray-200 hover:text-[#ffaa00]'}`}>세계관</Link>
           <Link to="/characters" className={`transition-colors ${currentPath === '/characters' ? 'text-[#ffaa00]' : 'text-gray-200 hover:text-[#ffaa00]'}`}>캐릭터</Link>
           <Link to="/webtoon" className={`transition-colors ${currentPath === '/webtoon' ? 'text-[#ffaa00]' : 'text-gray-200 hover:text-[#ffaa00]'}`}>웹툰</Link>
+          <Link to="/image" className={`transition-colors ${currentPath === '/image' ? 'text-[#ffaa00]' : 'text-gray-200 hover:text-[#ffaa00]'}`}>이미지</Link>
         </nav>
         <div className="flex items-center gap-2 md:gap-4 z-10">
           <div className="flex items-center gap-2 border border-[#333] bg-[#111] px-3 py-1.5 rounded-md">
@@ -202,6 +204,7 @@ function Header({ volume, setVolume }: { volume: number, setVolume: (v: number) 
               <Link to="/worldview" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors ${currentPath === '/worldview' ? 'text-[#ffaa00]' : 'text-gray-200 hover:text-[#ffaa00]'}`}>세계관</Link>
               <Link to="/characters" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors ${currentPath === '/characters' ? 'text-[#ffaa00]' : 'text-gray-200 hover:text-[#ffaa00]'}`}>캐릭터</Link>
               <Link to="/webtoon" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors ${currentPath === '/webtoon' ? 'text-[#ffaa00]' : 'text-gray-200 hover:text-[#ffaa00]'}`}>웹툰</Link>
+              <Link to="/image" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors ${currentPath === '/image' ? 'text-[#ffaa00]' : 'text-gray-200 hover:text-[#ffaa00]'}`}>이미지</Link>
             </nav>
           </motion.div>
         )}
@@ -267,9 +270,12 @@ function WorldviewSection() {
 
   return (
     <section className="animate-in fade-in duration-500">
-      <h3 className="text-3xl md:text-5xl text-center mb-12 font-display text-white tracking-widest drop-shadow-[0_0_10px_rgba(255,170,0,0.6)]">
-        <span> WORLDVIEW </span>
-      </h3>
+      <div className="flex flex-col items-center mb-6">
+        <h3 className="text-3xl md:text-5xl text-center font-display text-white tracking-widest drop-shadow-[0_0_10px_rgba(255,170,0,0.6)]">
+          <span> WORLDVIEW </span>
+        </h3>
+        <div className="w-48 md:w-80 h-[2px] bg-gradient-to-r from-transparent via-[#ffaa00] to-transparent mt-4 opacity-80 drop-shadow-[0_0_5px_rgba(255,170,0,0.8)]"></div>
+      </div>
       
       <div className="flex justify-center gap-4 mb-8">
         <button 
@@ -425,9 +431,12 @@ function CharacterSection() {
 
   return (
     <section className="animate-in fade-in duration-500">
-      <h3 className="text-3xl md:text-5xl text-center mb-16 font-display text-white tracking-widest drop-shadow-[0_0_10px_rgba(255,170,0,0.6)]">
-        <span> CHARACTERS </span>
-      </h3>
+      <div className="flex flex-col items-center mb-6">
+        <h3 className="text-3xl md:text-5xl text-center font-display text-white tracking-widest drop-shadow-[0_0_10px_rgba(255,170,0,0.6)]">
+          <span> CHARACTERS </span>
+        </h3>
+        <div className="w-48 md:w-80 h-[2px] bg-gradient-to-r from-transparent via-[#ffaa00] to-transparent mt-4 opacity-80 drop-shadow-[0_0_5px_rgba(255,170,0,0.8)]"></div>
+      </div>
       
       <div className="flex flex-wrap justify-center gap-3 mb-10">
         {factions.map(faction => (
@@ -454,7 +463,7 @@ function CharacterSection() {
             >
               <div className="w-full aspect-[3/4] bg-[#050505] border border-[#333] group-hover:border-[#ffaa00] transition-colors overflow-hidden relative flex items-center justify-center mb-4">
                 <img 
-                  src={`https://s.tpvp.uk/sun/${c.code}/1.webp`} 
+                  src={`https://s.tpvp.uk/SITE/char/${c.code}/1.webp`} 
                   alt={c.name} 
                   className="w-full h-full object-cover object-top"
                   referrerPolicy="no-referrer"
@@ -496,7 +505,7 @@ function CharacterSection() {
               <div className="w-full md:w-1/3 flex flex-col items-center justify-center gap-4 shrink-0">
                 <div className="w-full aspect-[3/4] bg-[#050505] border border-[#333] overflow-hidden relative flex items-center justify-center">
                   <img 
-                    src={`https://s.tpvp.uk/sun/${selectedChar.code}/1.webp`} 
+                    src={`https://s.tpvp.uk/SITE/char/${selectedChar.code}/1.webp`} 
                     alt={selectedChar.name} 
                     className="w-full h-full object-cover object-top"
                     referrerPolicy="no-referrer"
@@ -559,9 +568,12 @@ function CharacterSection() {
 function WebtoonSection() {
   return (
     <section className="animate-in fade-in duration-500">
-      <h3 className="text-3xl md:text-5xl text-center mb-16 font-display text-white tracking-widest drop-shadow-[0_0_10px_rgba(255,170,0,0.6)]">
-        <span> WEBTOON </span>
-      </h3>
+      <div className="flex flex-col items-center mb-6">
+        <h3 className="text-3xl md:text-5xl text-center font-display text-white tracking-widest drop-shadow-[0_0_10px_rgba(255,170,0,0.6)]">
+          <span> WEBTOON </span>
+        </h3>
+        <div className="w-48 md:w-80 h-[2px] bg-gradient-to-r from-transparent via-[#ffaa00] to-transparent mt-4 opacity-80 drop-shadow-[0_0_5px_rgba(255,170,0,0.8)]"></div>
+      </div>
       <div className="max-w-3xl mx-auto biker-box !p-2 md:!p-4 bg-[#050505]">
         <div className="w-full bg-black flex flex-col items-center">
           <img 
@@ -572,6 +584,128 @@ function WebtoonSection() {
           />
         </div>
       </div>
+    </section>
+  );
+}
+
+function ImageSection() {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [constraints, setConstraints] = useState({ left: 0, right: 0, top: 0, bottom: 0 });
+
+  const updateConstraints = () => {
+    if (!imgRef.current) return;
+    const unscaledWidth = imgRef.current.offsetWidth;
+    const unscaledHeight = imgRef.current.offsetHeight;
+    
+    // Calculate how much the scaled image overflows the viewport
+    const overflowX = Math.max(0, (unscaledWidth * zoomLevel - window.innerWidth) / 2);
+    const overflowY = Math.max(0, (unscaledHeight * zoomLevel - window.innerHeight) / 2);
+    
+    setConstraints({
+      left: -overflowX,
+      right: overflowX,
+      top: -overflowY,
+      bottom: overflowY
+    });
+  };
+
+  useEffect(() => {
+    if (isExpanded) {
+      updateConstraints();
+      window.addEventListener('resize', updateConstraints);
+      return () => window.removeEventListener('resize', updateConstraints);
+    }
+  }, [zoomLevel, isExpanded]);
+
+  const handleWheel = (e: React.WheelEvent) => {
+    e.stopPropagation();
+    setZoomLevel((prev) => {
+      // deltaY < 0 means scrolling up (zoom in), deltaY > 0 means scrolling down (zoom out)
+      const delta = e.deltaY < 0 ? 0.2 : -0.2;
+      return Math.min(Math.max(prev + delta, 1), 5);
+    });
+  };
+
+  return (
+    <section className="animate-in fade-in duration-500">
+      <div className="flex flex-col items-center mb-6">
+        <h3 className="text-3xl md:text-5xl text-center font-display text-white tracking-widest drop-shadow-[0_0_10px_rgba(255,170,0,0.6)]">
+          <span> IMAGE </span>
+        </h3>
+        <div className="w-48 md:w-80 h-[2px] bg-gradient-to-r from-transparent via-[#ffaa00] to-transparent mt-4 opacity-80 drop-shadow-[0_0_5px_rgba(255,170,0,0.8)]"></div>
+      </div>
+      <div className="max-w-7xl mx-auto biker-box !p-2 md:!p-4 bg-[#050505]">
+        <div className="w-full bg-black flex flex-col items-center">
+          <img 
+            src="https://s.tpvp.uk/SITE/image/image2.webp" 
+            alt="Image Gallery" 
+            className="w-full h-auto object-contain cursor-pointer hover:opacity-90 transition-opacity"
+            referrerPolicy="no-referrer"
+            onClick={() => setIsExpanded(true)}
+          />
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm overflow-hidden"
+            onClick={() => { setIsExpanded(false); setZoomLevel(1); }}
+            onWheel={handleWheel}
+          >
+            <button 
+              onClick={() => { setIsExpanded(false); setZoomLevel(1); }} 
+              className="absolute top-4 right-4 md:top-8 md:right-8 text-gray-400 hover:text-[#ffaa00] transition-colors z-50"
+            >
+              <X size={32} />
+            </button>
+            <motion.img
+              ref={imgRef}
+              onLoad={updateConstraints}
+              drag={zoomLevel > 1}
+              dragConstraints={constraints}
+              dragElastic={0.1}
+              initial={{ scale: 0.9, opacity: 0, x: 0, y: 0 }}
+              animate={{ 
+                scale: zoomLevel, 
+                opacity: 1,
+                ...(zoomLevel === 1 ? { x: 0, y: 0 } : {})
+              }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              src="https://s.tpvp.uk/SITE/image/image2.webp"
+              alt="Image Gallery Expanded"
+              className="max-w-full max-h-[95vh] object-contain"
+              style={{ cursor: zoomLevel > 1 ? 'grab' : 'default' }}
+              referrerPolicy="no-referrer"
+              onClick={(e) => e.stopPropagation()}
+            />
+            
+            <div 
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-[#0a0a0c]/90 px-6 py-4 rounded-full flex items-center gap-4 border border-[#333] backdrop-blur-md z-50 shadow-2xl opacity-40 hover:opacity-100 transition-opacity duration-300"
+              onClick={(e) => e.stopPropagation()}
+              onWheel={(e) => e.stopPropagation()}
+            >
+              <span className="text-gray-400 text-sm font-sans font-bold w-6 text-right">1x</span>
+              <input
+                type="range"
+                min="1"
+                max="5"
+                step="0.1"
+                value={zoomLevel}
+                onChange={(e) => setZoomLevel(parseFloat(e.target.value))}
+                className="w-32 md:w-48 accent-[#ffaa00] cursor-pointer"
+              />
+              <span className="text-gray-400 text-sm font-sans font-bold w-6">5x</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
