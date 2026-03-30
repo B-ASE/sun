@@ -389,7 +389,7 @@ function HeroSection() {
               transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
             />
             <div className="absolute inset-[2px] bg-[#0a0a0c] z-0 transition-colors group-hover:bg-[#1a150c]" />
-            <span className="relative z-10 text-[#ffaa00] drop-shadow-[0_0_8px_rgba(255,170,0,0.8)] group-hover:text-[#ffcc44] transition-colors">WORLD VIEW</span>
+            <span className="relative z-10 text-[#ffaa00] drop-shadow-[0_0_8px_rgba(255,170,0,0.8)] group-hover:text-[#ffcc44] transition-colors">WORLDVIEW</span>
           </button>
         </div>
       </motion.div>
