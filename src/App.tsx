@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Volume2, VolumeX, Flame, Crosshair, Zap, Wrench, ChevronRight, X, Menu } from 'lucide-react';
+import { usePinch } from '@use-gesture/react';
 
 export default function App() {
   const [started, setStarted] = useState(false);
@@ -123,8 +124,106 @@ function SpeedLines() {
 }
 
 function MainContent({ volume, setVolume }: { volume: number, setVolume: (v: number) => void }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const pages = ['/', '/worldview', '/characters', '/webtoon', '/image'];
+  const dragStartX = useRef<number | null>(null);
+  const [dragOffset, setDragOffset] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest('.no-swipe')) return;
+    dragStartX.current = e.clientX;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (dragStartX.current === null) return;
+    const distance = e.clientX - dragStartX.current;
+    setDragOffset(distance * 0.3);
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (dragStartX.current === null) return;
+    const dragEndX = e.clientX;
+    const distance = dragEndX - dragStartX.current;
+    
+    const currentIndex = pages.indexOf(location.pathname);
+    if (currentIndex === -1) {
+      dragStartX.current = null;
+      setDragOffset(0);
+      return;
+    }
+
+    if (distance > 100) {
+      // Drag Right (mouse moved right) -> Previous page
+      if (currentIndex > 0) {
+        navigate(pages[currentIndex - 1]);
+      }
+    } else if (distance < -100) {
+      // Drag Left (mouse moved left) -> Next page
+      if (currentIndex < pages.length - 1) {
+        navigate(pages[currentIndex + 1]);
+      }
+    }
+    dragStartX.current = null;
+    setDragOffset(0);
+  };
+
+  const handleMouseLeave = () => {
+    if (dragStartX.current !== null) {
+      dragStartX.current = null;
+      setDragOffset(0);
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if ((e.target as HTMLElement).closest('.no-swipe')) return;
+    dragStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (dragStartX.current === null) return;
+    const distance = e.touches[0].clientX - dragStartX.current;
+    setDragOffset(distance * 0.3);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (dragStartX.current === null) return;
+    const dragEndX = e.changedTouches[0].clientX;
+    const distance = dragEndX - dragStartX.current;
+    
+    const currentIndex = pages.indexOf(location.pathname);
+    if (currentIndex === -1) {
+      dragStartX.current = null;
+      setDragOffset(0);
+      return;
+    }
+
+    if (distance > 100) {
+      // Drag Right -> Previous page
+      if (currentIndex > 0) {
+        navigate(pages[currentIndex - 1]);
+      }
+    } else if (distance < -100) {
+      // Drag Left -> Next page
+      if (currentIndex < pages.length - 1) {
+        navigate(pages[currentIndex + 1]);
+      }
+    }
+    dragStartX.current = null;
+    setDragOffset(0);
+  };
+
   return (
-    <div className="relative w-full h-full pb-20">
+    <div 
+      className="relative w-full h-full pb-20 select-none overflow-x-hidden"
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Fixed Background */}
       <div className="fixed inset-0 -z-10 bg-[#0a0a0c]">
         <div className="absolute inset-0 bg-[url('https://s.tpvp.uk/SITE/image/main.webp')] md:bg-[url('https://s.tpvp.uk/SITE/image/main3.webp')] bg-cover bg-top md:bg-[length:100%_auto] md:bg-top md:bg-no-repeat opacity-100 md:brightness-110"></div>
@@ -133,15 +232,37 @@ function MainContent({ volume, setVolume }: { volume: number, setVolume: (v: num
 
       <Header volume={volume} setVolume={setVolume} />
       
-      <main className="container mx-auto px-4 pt-24">
-        <Routes>
-          <Route path="/" element={<HeroSection />} />
-          <Route path="/worldview" element={<WorldviewSection />} />
-          <Route path="/characters" element={<CharacterSection />} />
-          <Route path="/webtoon" element={<WebtoonSection />} />
-          <Route path="/image" element={<ImageSection />} />
-        </Routes>
-      </main>
+      <motion.main 
+        className="container mx-auto px-4 pt-24 flex flex-col min-h-[calc(100vh-5rem)] relative"
+        animate={{ x: dragOffset }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
+        <div className="flex-grow">
+          <Routes>
+            <Route path="/" element={<HeroSection />} />
+            <Route path="/worldview" element={<WorldviewSection />} />
+            <Route path="/characters" element={<CharacterSection />} />
+            <Route path="/webtoon" element={<WebtoonSection />} />
+            <Route path="/image" element={<ImageSection />} />
+          </Routes>
+        </div>
+        <SystemDragIndicator />
+      </motion.main>
+    </div>
+  );
+}
+
+function SystemDragIndicator() {
+  return (
+    <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-80 pointer-events-none">
+      <span className="text-xs tracking-[0.3em] text-white mb-2 font-display uppercase drop-shadow-[0_0_5px_rgba(255,255,255,0.6)]">System drag</span>
+      <div className="relative w-48 h-[2px] bg-transparent flex justify-center overflow-hidden">
+        <motion.div
+          className="absolute h-full bg-gradient-to-r from-transparent via-white to-transparent"
+          animate={{ width: ["0%", "100%", "0%"], opacity: [0, 1, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
     </div>
   );
 }
@@ -152,11 +273,11 @@ function Header({ volume, setVolume }: { volume: number, setVolume: (v: number) 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-black/90 border-b border-[#333] backdrop-blur-md z-40">
+    <header className="fixed top-0 left-0 right-0 bg-black/90 border-b border-[#333] backdrop-blur-md z-40 no-swipe">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between relative">
         <div className="flex items-center h-full py-2 z-10">
           <Link to="/">
-            <img src="https://s.tpvp.uk/SITE/image/title4.webp" alt="황혼을 넘어 달려라" className="h-8 md:h-10 w-auto drop-shadow-[0_0_10px_rgba(255,170,0,0.4)]" referrerPolicy="no-referrer" />
+            <img src="https://s.tpvp.uk/SITE/image/title4.webp" alt="황혼을 넘어 달려라" className="-mt-3 h-8 md:h-10 w-auto drop-shadow-[0_0_10px_rgba(255,170,0,0.4)]" referrerPolicy="no-referrer" />
           </Link>
         </div>
         <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 gap-8 text-lg md:text-[30px] font-display tracking-widest whitespace-nowrap">
@@ -222,7 +343,7 @@ function HeroSection() {
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.3, type: "spring", stiffness: 100 }}
-        className="flex flex-col items-center"
+        className="flex flex-col items-center w-full"
       >
         <div className="mb-12 w-[90%] max-w-[650px] px-4">
           <img src="https://s.tpvp.uk/SITE/image/title.webp" alt="황혼을 넘어 달려라" className="w-full h-auto drop-shadow-[0_0_20px_rgba(255,170,0,0.6)]" referrerPolicy="no-referrer" />
@@ -236,8 +357,39 @@ function HeroSection() {
         </div>
 
         <div className="flex flex-col sm:flex-row justify-center gap-6">
-          <button className="biker-button" onClick={() => navigate('/worldview')}>
-            <span>GAME START</span>
+          <button 
+            className="relative px-10 py-4 font-display tracking-widest text-xl group overflow-hidden flex items-center justify-center min-w-[200px]" 
+            onClick={() => window.open('https://www.eden-chat.com/works/0fa237e9-81e1-4ffc-8d63-2f96151859d3', '_blank')}
+          >
+            <motion.div
+              className="absolute w-[300%] h-[300%] bg-[conic-gradient(from_0deg,transparent_70%,#ef4444_100%)]"
+              animate={{ rotate: [0, 360] }}
+              transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+            />
+            <motion.div
+              className="absolute w-[300%] h-[300%] bg-[conic-gradient(from_0deg,transparent_70%,#ef4444_100%)]"
+              animate={{ rotate: [180, 540] }}
+              transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+            />
+            <div className="absolute inset-[2px] bg-[#0a0a0c] z-0 transition-colors group-hover:bg-[#1a0a0c]" />
+            <span className="relative z-10 text-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.8)] group-hover:text-red-400 transition-colors">GAME START</span>
+          </button>
+          <button 
+            className="relative px-10 py-4 font-display tracking-widest text-xl group overflow-hidden flex items-center justify-center min-w-[200px]" 
+            onClick={() => navigate('/worldview')}
+          >
+            <motion.div
+              className="absolute w-[300%] h-[300%] bg-[conic-gradient(from_0deg,transparent_70%,#ffaa00_100%)]"
+              animate={{ rotate: [0, 360] }}
+              transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+            />
+            <motion.div
+              className="absolute w-[300%] h-[300%] bg-[conic-gradient(from_0deg,transparent_70%,#ffaa00_100%)]"
+              animate={{ rotate: [180, 540] }}
+              transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+            />
+            <div className="absolute inset-[2px] bg-[#0a0a0c] z-0 transition-colors group-hover:bg-[#1a150c]" />
+            <span className="relative z-10 text-[#ffaa00] drop-shadow-[0_0_8px_rgba(255,170,0,0.8)] group-hover:text-[#ffcc44] transition-colors">WORLD VIEW</span>
           </button>
         </div>
       </motion.div>
@@ -345,81 +497,81 @@ function CharacterSection() {
   const charactersData: Record<string, any[]> = {
     "나카츠리": [
       { name: "겐류", gender: "男", age: "27", appearance: "금발, 단발", outfit: "선글라스, 알로하 셔츠, 갈색 바지", 
-      personality: "분위기 메이커, 활발함, 사교성 좋음, 이상주의", 
+      personality: ".", 
       traits: "나카츠리 소속의 괴이 사냥꾼.//활발한 성격에 사교성도 좋아 분위기 메이커의 역할을 주로 맡으며, 이상적인 이야기를 바라는 경향이 있어 항상 해피엔딩을 추구한다.//전투에서는 리볼버를 이용한 속사로 공격하거나, 다양한 도구를 이용해 타인을 보조한다.", 
-      combat: "리볼버를 사용한 속사, 다양한 도구를 이용한 보조", 
-      speech: "반말(해체), 웃음소리는 '냐하항'", 
+      combat: ".", 
+      speech: ".", 
       quote: "냐하하하항! 죽을 뻔 했네!", 
       code: "A" }
     ],
     "원스휴먼": [
       { name: "닉스", gender: "女", age: "18", appearance: "백발, 장발, 별빛처럼 반짝이는 머리카락, 적안", outfit: "흰색 민소매 원피스, 안쪽이 별하늘처럼 된 흰색 양산", 
-      personality: "겉:(솔직하지 못함, 냉담함, 냉소적임, 무관심함), 속:(순수함, 다정함, 자비로움, 온화함)", 
+      personality: ".", 
       traits: "원스휴먼의 수장이자 성녀. 중립파.//솔직하지 못한 성격이라 겉으로는 까칠하고 냉소적인 태도를 보이나, 내면에는 항상 타인을 생각하는 다정함을 지녔다.//무한한 마력을 통해 수많은 마법을 구사한다.", 
-      combat: "무한한 마력을 통한 수많은 마법을 구사", 
-      speech: "반말(해라체), 까칠하면서도 부드러움", 
+      combat: ".", 
+      speech: ".", 
       quote: "그런다고 뭐가 되겠니? 의미 없는 짓은 하지 말렴.", 
       code: "D" },
       { name: "루이나", gender: "女", age: "19", appearance: "하늘색 꽁지머리, 청안, 흰색 십자동공", outfit: "흰색 캐미솔, 검은색 자켓, 찢어진 청바지", 
-      personality: "외향적, 털털함, 낙천적, 자유분방함, 즉흥적, 예의없음", 
+      personality: ".", 
       traits: "원스휴먼의 중립파. 루온과는 남매 사이.//활발하고 수다스러운데다 자유분방한 성격으로,/집단의 규율에 얽매이지 않으나 의외로 신앙심은 뛰어나다.//전투에선 손에 마력을 둘러 클로를 만들어 내 육탄전을 벌인다.", 
-      combat: "손에 마력을 둘러 클로를 만들어 내 육탄전을 벌임", 
-      speech: "반말(해체), 활발하고 수다스러움, 닉스에겐 존댓말(해요체)", 
+      combat: ".", 
+      speech: ".", 
       quote: "안녕~! 오늘도 좋은 하루야!", 
       code: "E" },
       { name: "루온", gender: "男", age: "19", appearance: "회색 올백머리, 청안", outfit: "흰색 셔츠, 데님 셔츠, 갈색 바지", 
-      personality: "친절함, 대범함, 단정함, 예의바름, 눈치없음", 
+      personality: ".", 
       traits: "원스휴먼의 중립파. 루이나와는 남매 사이.//부드럽고 온화한 성격으로 규율을 중시하나,/루이나에겐 항상 무르면서도 허물없는 모습을 보인다.//문제가 발생할 경우 가급적이면 대화로 해결하려고 하나,/대화로 해결할 수 없어 전투가 되어도 마다하지 않는다.//전투에서는 카타나를 사용해 속도전을 벌인다.", 
-      combat: "카타나를 사용한 속도전", 
-      speech: "반말(해체), 부드럽고 온화함, 닉스에겐 존댓말(다나까체)", 
+      combat: ".", 
+      speech: ".", 
       quote: "반가워. 잘 부탁할게.", 
       code: "F" }
     ],
     "에센티아": [
       { name: "바엘", gender: "男", age: "불명", appearance: "검정색 울프컷, 백안, 파문형태의 동공, 중년", outfit: "검은색 정장, 검은색 코트, 금색 테두리", 
-      personality: "구시대적, 결단적, 독불장군, 무인, 말수가 적음, 무력 중시, 약자 멸시, 강자 존중, 강압적임", 
+      personality: ".", 
       traits: "에센티아의 수장이자 괴이.//구시대적인 면모를 지닌 무인으로,/무력을 중시해 강자를 존중하고 약자를 멸시한다.//강압적이고 독불장군의 성향으로,/말수도 적어 실질적인 조직 관리는 제라에게 맡기고 있다.//에센티아의 수장다운 무력을 지니고 있으며,/검, 창, 도끼 등 다양한 냉병기를 마력으로 만들어내 능숙하게 다룬다.", 
-      combat: "검, 창, 활, 도끼 등, 다양한 냉병기를 마력으로 만들어내 능숙하게 사용함", 
-      speech: "반말(해라체), 무뚝뚝하고 간결함, 예스러운 어미", 
+      combat: ".", 
+      speech: ".", 
       quote: "강함이야말로 절대적일진저.", 
       code: "G" },
       { name: "제라", gender: "女", age: "불명", appearance: "반투명 백발, 장발, 청색의 시크릿 투톤 헤어, 청안", outfit: "검은색 드레스, 검은색 보닛", 
-      personality: "어른스러움, 온화함, 잔혹함, 예의바름, 인간에게 호의적", 
+      personality: ".", 
       traits: "에센티아의 부수장이자 괴이. 인간에게 호의적.//어른스러운데다 온화하고 예의바른 성격으로,/바엘을 대신해 에센티아의 다양한 업무를 총괄하고 있다.//약자에게도 강해질 기회를 주는 자비로운 면모를 보이나,/동시에 타인을 가차 없이 죽일 수 있는 잔혹함도 겸비하고 있다.//그런 잔혹성 때문인지 환술, 정신계 마법을 통해 상대의 고통을 최대한 이끌어내는 마법을 구사한다.", 
-      combat: "환술/정신계 마법을 통해 상대에게 이상한 정보, 풍경을 보여주어 혼란시킴, 상대의 고통을 최대한 이끌어내는 마법 구사", 
-      speech: "존댓말(해요체), 나긋나긋하고 온화함", 
+      combat: ".", 
+      speech: ".", 
       quote: "어머나, 정말로 괜찮으시겠어요?", 
       code: "H" }
     ],
     "B.A.221 사무소": [
       { name: "알레나", gender: "女", age: "22", appearance: "금발, 장발, 연한 갈색 눈", outfit: "흰색 셔츠, 청색 조끼, 갈색 코트", 
-      personality: "외강내유, 겉:(외향적, 자신감 넘침, 열정적임, 활기참, 주도적, 대범함, 즉흥적, 거만함), 속:(내향적, 신중함, 선량함, 비관적임, 소심함, 자신감 없음)", 
+      personality: ".", 
       traits: "B.A.221 사무소의 소장이자 탐정. 조수인 벤자민과는 소꿉친구.//항상 겉으로는 자신감 넘치고 즉흥적이고 거만한 모습을 보이나 이는 스스로 이상적인 모습을 보이기 위해 허풍을 부리는 것으로, 실제로는 자신감 없고 신중한 성격이다.//전투 능력은 없기에, 전투 시엔 전황을 살피고 분석해 보조한다.", 
-      combat: "직접적인 전투 능력이 없어 전황을 살피고 분석해 보조함", 
-      speech: "반말(해체), 자신감 넘치고 강단 있음, 의기소침할 땐 자신감 없고 소심함", 
+      combat: ".", 
+      speech: ".", 
       quote: "자, 이번 사건의 진상은 바로 이거다!", 
       code: "I" },
       { name: "벤자민", gender: "男", age: "22", appearance: "갈색 단발, 가르마, 갈색 눈, 다크서클, 온화한 인상", outfit: "흰색 셔츠, 갈색 조끼, 갈색 바지", 
-      personality: "외유내강, 차분함, 상냥함, 어른스러움, 온화함, 예의바름, 단정함", 
+      personality: ".", 
       traits: "B.A.221 사무소 소속이자 조수. 탐정인 알레나와는 소꿉친구.//차분하고 어른스러운 성격으로,/항상 다른 사람들에게 정중하고 예의바르게 대한다.//또한, 절름발이지만 롱소드를 이용한 상대의 힘을 이용하는 방어적인 검법을 구사할 줄 알기에, 전투가 필요할 땐 전투 능력이 없는 알레나를 대신하여 움직이는 경우가 잦다.", 
-      combat: "롱소드를 이용한 방어적인 검법/상대의 힘을 이용하는 검법을 사용", 
-      speech: "존댓말(해요체+하십시오체), 정중하고 차분함, 알레나에겐 반말(해체)", 
+      combat: ".", 
+      speech: ".", 
       quote: "오늘도 수고 많았어, 알레나.", 
       code: "J" }
     ],
     "괴이": [
       { name: "황혼의 질주자", gender: "男", age: "불명", appearance: "해골 머리", outfit: "불꽃으로 이루어진 스카프, 검은색 가죽자켓, 검은색 가죽바지, 가죽 장갑", 
-      personality: "ESTP, 폭주족, 속도광, 경쟁심, 레이스 중시, 두려움과 공포 없음", 
+      personality: ".", 
       traits: "최근에 탄생한 괴이.//끝없는 속도를 추구해 폭주하고 있으며,/타인과의 1:1 경주를 통해 속도를 겨루는 걸 즐긴다.", 
-      combat: "불꽃 마법+속도를 살려 정신없이 몰아붙임", 
-      speech: "반말(해체)", 
+      combat: ".", 
+      speech: ".", 
       quote: "데려가 주마, 스피드의 저편으로!", 
       code: "C" },
       { name: "나일레모나", gender: "女", age: "불명", appearance: "흑발, 은색의 시크릿 투톤 헤어, 백안", outfit: "흰색 셔츠, 흑색 원피스, 나비 머리핀", 
-      personality: "ENFP, 짓궃음, 장난기 많음, 가챠 중독, 혼돈", 
+      personality: ".", 
       traits: "'재밌는 이야기를 보여줄 것'을 조건으로 겐류와 계약한 괴이.//짓궃고 장난기 많은 성격에 가챠 중독의 성향까지 있어 항상 혼돈스러운 일을 벌이나, 장난을 치더라도 선은 넘지 않는 편이다.//전투에서는 주사위를 굴려 랜덤한 디버프를 부여하는 마법을 사용해 보조한다.", 
-      combat: "주사위를 굴려서 랜덤한 디버프를 부여할 수 있는 마법 사용해 보조", 
-      speech: "존댓말(해요체)", 
+      combat: ".", 
+      speech: ".", 
       quote: "자! 신나는 가챠 타임! 이번에 나올 눈은 과연 뭘까요!?", 
       code: "B" }
     ]
@@ -485,7 +637,7 @@ function CharacterSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm no-swipe"
             onClick={() => setSelectedChar(null)}
           >
             <motion.div
@@ -628,6 +780,19 @@ function ImageSection() {
     });
   };
 
+  const bindPinch = usePinch(({ offset: [s] }) => {
+    setZoomLevel(Math.min(Math.max(s, 1), 5));
+  }, {
+    from: () => [zoomLevel, 0]
+  });
+
+  const handleImageClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (zoomLevel === 1) {
+      setZoomLevel(1.2);
+    }
+  };
+
   return (
     <section className="animate-in fade-in duration-500">
       <div className="flex flex-col items-center mb-6">
@@ -654,7 +819,7 @@ function ImageSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm overflow-hidden"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm overflow-hidden no-swipe"
             onClick={() => { setIsExpanded(false); setZoomLevel(1); }}
             onWheel={handleWheel}
           >
@@ -665,6 +830,7 @@ function ImageSection() {
               <X size={32} />
             </button>
             <motion.img
+              {...bindPinch()}
               ref={imgRef}
               onLoad={updateConstraints}
               drag={zoomLevel > 1}
@@ -681,9 +847,9 @@ function ImageSection() {
               src="https://s.tpvp.uk/SITE/image/image2.webp"
               alt="Image Gallery Expanded"
               className="max-w-full max-h-[95vh] object-contain"
-              style={{ cursor: zoomLevel > 1 ? 'grab' : 'default' }}
+              style={{ cursor: zoomLevel > 1 ? 'grab' : 'zoom-in', touchAction: 'none' }}
               referrerPolicy="no-referrer"
-              onClick={(e) => e.stopPropagation()}
+              onClick={handleImageClick}
             />
             
             <div 
