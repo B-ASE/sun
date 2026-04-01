@@ -560,7 +560,7 @@ function CharacterSection() {
       code: "J" }
     ],
     "괴이": [
-      { name: "황혼의 질주자", gender: "男", age: "불명", appearance: "해골 머리", outfit: "불꽃으로 이루어진 스카프, 검은색 가죽자켓, 검은색 가죽바지, 가죽 장갑", 
+      { name: "황혼의 질주자", gender: "男", age: "불명", appearance: "해골 머리", outfit: "황혼색 스카프, 검은색 가죽자켓, 검은색 가죽바지, 가죽 장갑", 
       personality: ".", 
       traits: "최근에 탄생한 괴이.//끝없는 속도를 추구해 폭주하고 있으며,/타인과의 1:1 경주를 통해 속도를 겨루는 걸 즐긴다.", 
       combat: ".", 
