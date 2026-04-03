@@ -402,14 +402,16 @@ function WorldviewSection() {
 
   const concepts = [
     { term: "뒷세계", desc: "이능력, 마법, 괴이 등의 초상적인 현상과 관련된 분야를 뜻한다." },
+    { term: "일반인", desc: "괴이, 이능력, 마법, 초상적인 현상 등을 모르고 살아가는 사람들의 통칭. 극소수의 예외를 제외하면 뒷세계의 일에선 무력하다." },
+    { term: "괴이 사냥꾼", desc: "편의상 괴이 사냥꾼이라 불리나, 실제로는 뒷세계에서 벌어지는 초상적인 현상을 해결하는 자들의 통칭. 괴이를 토벌하는 일 외를 하는 경우도 자주 발생한다." },
     { term: "괴이", desc: "도시전설, 신화, 소문 등의 다양한 이야기가 실체화 된 생명체. 기본적으로 근간이 되는 본질에 따라 행동하며, 그로 인해 각종 문제를 일으키는 경우가 잦다." },
     { term: "에테르", desc: "인간의 감정이나 생명력에서 비롯되는 에너지. 괴이의 주된 먹이로, 괴이가 인간을 습격하거나 장난치는 주된 원인이기도 하다. 뒷세계에서 화폐로도 사용되며, 그 가치는 10에테르=1달러." },
-    { term: "이계", desc: "일정 수준의 괴이가 형성하는 이공간. 이계의 공간에선 물리적인 법칙을 따르지 않고 고유한 법칙과 환경을 구성하며, 그 법칙은 절대적이다." },
-    { term: "괴이 사냥꾼", desc: "편의상 괴이 사냥꾼이라 불리나, 실제로는 뒷세계에서 벌어지는 초상적인 현상을 해결하는 자들의 통칭. 괴이를 토벌하는 일 외를 하는 경우도 자주 발생한다." },
-    { term: "GH-NET", desc: "뒷세계 인물들이 사용하는 커뮤니티. 다양한 정보가 흘러 들어오지만, 진실을 판별하는 건 이용자들의 몫이다." },
-    { term: "일반인", desc: "괴이, 이능력, 마법, 초상적인 현상 등을 모르고 살아가는 사람들의 통칭. 극소수의 예외를 제외하면 뒷세계의 일에선 무력하다." },
     { term: "이능력", desc: "희귀한 체질을 지닌 인간이 지니는 특수한 힘. 2개 이상의 이능력을 지닌 인물은 세계에서도 손에 꼽을 정도로 적다." },
     { term: "마법", desc: "마력을 통해 초자연적인 현상을 일으키는 기술. 인간은 선천적으로 마력을 타고 나는 경우가 적어 주로 괴이가 사용한다." },
+    { term: "이계", desc: "일정 수준의 괴이가 형성하는 이공간. 이계의 공간에선 물리적인 법칙을 따르지 않고 고유한 법칙과 환경을 구성하며, 그 법칙은 절대적이다." },
+    { term: "계약", desc: "인간이 괴이에게 모종의 대가를 지불하고 동료로서 영입하는 걸 의미한다. 대가로는 주기적으로 에테르를 줄 것을 요구하는 경우가 일반적이나, 괴이에 따라 특이한 것을 요구하는 경우도 있다." },
+    { term: "GH-NET", desc: "뒷세계 인물들이 사용하는 커뮤니티. P.S를 통해서만 접속할 수 있다. 다양한 정보가 흘러 들어오지만, 진실을 판별하는 건 이용자들의 몫이다." },
+    { term: "P.S (Pocket Space)", desc: "휴대형 게임기기 형태의 소형 컴퓨터. 가운데에 스크린이, 양옆에 버튼이 있다. 에테르나 소지품을 데이터화 하여 수납하는 기능과, GH-NET에 접속할 수 있는 기능이 있다. 명백하게 시대를 초월한 기술력이 적용된 물건이나 뒷세계의 인물에게 보편적으로 보급될만큼 양산되고 있으며, 누가 제작해서 배포하는지는 불명이다. 이따금 아무것도 모르는 신입에게 플레이스테이션 게임기라 속이고 놀리는 경우도 있다." },
     { term: "황혼의 도로", desc: "황혼의 질주자가 형성한 이계. 특성상 도로에 형성되어있으며, 주기적으로 근처를 지나가는 탑승물과 탑승자를 무작위로 이계에 끌어들인다. 내부에 진입한 인물은 시시각각 환경이 변하는 도로에서 황혼의 질주자와 1:1 레이싱을 벌여야 하며, 패배자는 에테르가 전부 빨려 사망한다." }
   ];
 
@@ -444,7 +446,7 @@ function WorldviewSection() {
         </button>
       </div>
 
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto select-text no-swipe">
         {activeTab === 'background' && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
             <div className="biker-box">
@@ -644,7 +646,7 @@ function CharacterSection() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="biker-box after:hidden before:hidden max-w-4xl w-full max-h-[90vh] overflow-y-auto bg-[#0a0a0c] p-6 md:p-8 relative flex flex-col md:flex-row gap-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+              className="biker-box after:hidden before:hidden max-w-4xl w-full max-h-[90vh] overflow-y-auto bg-[#0a0a0c] p-6 md:p-8 relative flex flex-col md:flex-row gap-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] select-text"
               onClick={e => e.stopPropagation()}
             >
               <button 
