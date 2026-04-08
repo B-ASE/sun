@@ -453,7 +453,8 @@ function WorldviewSection() {
               <h4 className="text-2xl font-display text-[#ffaa00] mb-4 tracking-wider">BACKGROUND</h4>
               <p className="text-lg text-gray-300 font-sans leading-relaxed">
                 <strong className="text-white text-xl">2003년의 현대.</strong><br/>
-                이능력, 마법, 괴이 등이 존재하는 어반 판타지 세계.
+                이능력, 마법, 괴이 등이 존재하는 어반 판타지 세계.<br/>
+                한국, 일본, 미국 등의 다양한 나라가 혼합된 가상의 국가인 '판게아'를 배경으로 한다.
               </p>
             </div>
             
