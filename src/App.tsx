@@ -434,15 +434,21 @@ function WorldviewSection() {
       <div className="flex justify-center gap-4 mb-8">
         <button 
           onClick={() => setActiveTab('background')} 
-          className={`biker-button !py-2 !px-6 !text-xl ${activeTab === 'background' ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
+          className={`biker-button !py-2 !px-6 !text-2xl ${activeTab === 'background' ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
         >
           <span>배경 & 개념</span>
         </button>
         <button 
           onClick={() => setActiveTab('factions')} 
-          className={`biker-button !py-2 !px-6 !text-xl ${activeTab === 'factions' ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
+          className={`biker-button !py-2 !px-6 !text-2xl ${activeTab === 'factions' ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
         >
           <span>주요 세력</span>
+        </button>
+        <button 
+          onClick={() => setActiveTab('collab')} 
+          className={`biker-button !py-2 !px-6 !text-2xl ${activeTab === 'collab' ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
+        >
+          <span>콜라보</span>
         </button>
       </div>
 
@@ -486,6 +492,30 @@ function WorldviewSection() {
             ))}
           </motion.div>
         )}
+
+        {activeTab === 'collab' && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+            <div className="biker-box">
+              <h4 className="text-2xl font-display text-[#ffaa00] mb-6 tracking-wider">FACTIONS</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                <div className="border-l-2 border-[#333] pl-4 hover:border-[#ffaa00] transition-colors">
+                  <h5 className="text-lg font-bold text-white mb-2 font-sans">미드나잇 셜록</h5>
+                  <p className="text-sm text-gray-400 font-sans leading-relaxed">롤랑과 마핀 두 사람이 세운 작은 탐정 사무소. 뒷세계와 연관된 일, 연관 없는 일 전부에서 실력은 인정 받고 있으나, 롤랑의 괴짜 성향으로 인해 기피된다. 흥미로운 사건만 받으려는 롤랑과, 그런 롤랑에게 잔소리를 하며 다양한 의뢰를 받도록 끌고 가는 마핀 덕분에 유지되는 중. 내부는 항상 롤랑의 연구 등으로 인해 어질러져 있다.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="biker-box">
+              <h4 className="text-2xl font-display text-[#ffaa00] mb-6 tracking-wider">CONCEPTS</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                <div className="border-l-2 border-[#333] pl-4 hover:border-[#ffaa00] transition-colors">
+                  <h5 className="text-lg font-bold text-white mb-2 font-sans">페즐</h5>
+                  <p className="text-sm text-gray-400 font-sans leading-relaxed">최근에 전세계에서 발생하기 시작한 괴현상. 괴생명체, 재해, 인간의 형상을 한 무언가까지 다양한 형태로 나타나 각종 문제를 일으키고 있다. 연구자 중에선 괴이와의 연관을 주장하는 사람도 있으나, 괴이와는 연관이 없다.</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </div>
     </section>
   );
@@ -495,7 +525,7 @@ function CharacterSection() {
   const [activeFaction, setActiveFaction] = useState('전체');
   const [selectedChar, setSelectedChar] = useState<any>(null);
 
-  const factions = ["전체", "나카츠리", "원스휴먼", "에센티아", "B.A.221 사무소", "괴이"];
+  const factions = ["전체", "나카츠리", "원스휴먼", "에센티아", "B.A.221 사무소", "괴이", "콜라보"];
 
   const charactersData: Record<string, any[]> = {
     "나카츠리": [
@@ -577,6 +607,22 @@ function CharacterSection() {
       speech: ".", 
       quote: "자! 신나는 가챠 타임! 이번에 나올 눈은 과연 뭘까요!?", 
       code: "B" }
+    ],
+    "콜라보": [
+      { name: "롤랑", gender: "女", age: "18", appearance: "검은색 장발, 오드아이(검은색,빨간색)", outfit: "검은색 탐정모, 검은색 코트, 흰색 셔츠, 검은색 넥타이, 검은색 스커트, 검은색 스타킹, 검은색 구두", 
+      personality: ".", 
+      traits: "미드나잇 셜록의 천재 명탐정.//4차원을 초월한 괴짜적 성향을 보유하고 있으며,/귀찮음이 많으나, 흥미로운 것엔 사족을 못 쓴다./덕분에 조수인 마핀의 잔소리가 끊일 일은 없다.//100m 이내의 이상현상을 전부 파악하여/정보를 조합하는 이능력 '서치'를 보유하고 있다.", 
+      combat: ".", 
+      speech: ".", 
+      quote: "마핀, 이걸 보게나. 흥미로운 물건이라네.", 
+      code: "K" },
+      { name: "마핀", gender: "女", age: "18", appearance: "주황색 단발, 주황색 눈, 고양이 같은 눈매", outfit: "흰색 셔츠, 파란색 자켓, 회색 조끼, 검은색 넥타이", 
+      personality: ".", 
+      traits: "미드나잇 셜록의 조수이자 롤랑의 친구.//당당하면서도 감정적인 면모를 많이 보이나,/정작 솔직하지 못한 츤데레적 성향도 존재한다.//탐정이자 친구인 롤랑의 기행엔 언제나 골머리를 앓으며,/항상 롤랑을 제지하기 위해 고생하는 나날을 보내고 있다.//짧은 시간 동안 근력, 속도, 반사신경이 폭발적으로/증가하는 이능력 '신체강화'를 보유하고 있다.", 
+      combat: ".", 
+      speech: ".", 
+      quote: "야, 롤랑! 방 청소 해두랬지!", 
+      code: "L" }
     ]
   };
 
@@ -598,7 +644,7 @@ function CharacterSection() {
           <button 
             key={faction}
             onClick={() => setActiveFaction(faction)} 
-            className={`biker-button !py-2 !px-4 !text-xl ${activeFaction === faction ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
+            className={`biker-button !py-2 !px-4 !text-2xl ${activeFaction === faction ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
           >
             <span>{faction}</span>
           </button>
