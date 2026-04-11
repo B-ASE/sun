@@ -434,19 +434,19 @@ function WorldviewSection() {
       <div className="flex justify-center gap-4 mb-8">
         <button 
           onClick={() => setActiveTab('background')} 
-          className={`biker-button !py-2 !px-6 !text-2xl ${activeTab === 'background' ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
+          className={`biker-button !py-2 !px-6 !text-xl md:!text-2xl ${activeTab === 'background' ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
         >
           <span>배경 & 개념</span>
         </button>
         <button 
           onClick={() => setActiveTab('factions')} 
-          className={`biker-button !py-2 !px-6 !text-2xl ${activeTab === 'factions' ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
+          className={`biker-button !py-2 !px-6 !text-xl md:!text-2xl ${activeTab === 'factions' ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
         >
           <span>주요 세력</span>
         </button>
         <button 
           onClick={() => setActiveTab('collab')} 
-          className={`biker-button !py-2 !px-6 !text-2xl ${activeTab === 'collab' ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
+          className={`biker-button !py-2 !px-6 !text-xl md:!text-2xl ${activeTab === 'collab' ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
         >
           <span>콜라보</span>
         </button>
@@ -644,7 +644,7 @@ function CharacterSection() {
           <button 
             key={faction}
             onClick={() => setActiveFaction(faction)} 
-            className={`biker-button !py-2 !px-4 !text-2xl ${activeFaction === faction ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
+            className={`biker-button !py-2 !px-4 !text-xl md:!text-2xl ${activeFaction === faction ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
           >
             <span>{faction}</span>
           </button>
@@ -864,7 +864,7 @@ function ImageSection() {
           <button 
             key={cat.id}
             onClick={() => setActiveCategory(cat.id)} 
-            className={`biker-button !py-2 !px-6 !text-2xl ${activeCategory === cat.id ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
+            className={`biker-button !py-2 !px-6 !text-xl md:!text-2xl ${activeCategory === cat.id ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
           >
             <span>{cat.id}</span>
           </button>
