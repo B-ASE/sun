@@ -500,7 +500,7 @@ function WorldviewSection() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                 <div className="border-l-2 border-[#333] pl-4 hover:border-[#ffaa00] transition-colors">
                   <h5 className="text-lg font-bold text-white mb-2 font-sans">미드나잇 셜록</h5>
-                  <p className="text-sm text-gray-400 font-sans leading-relaxed">롤랑과 마핀 두 사람이 세운 작은 탐정 사무소. 뒷세계와 연관된 일, 연관 없는 일 전부에서 실력은 인정 받고 있으나, 롤랑의 괴짜 성향으로 인해 기피된다. 흥미로운 사건만 받으려는 롤랑과, 그런 롤랑에게 잔소리를 하며 다양한 의뢰를 받도록 끌고 가는 마핀 덕분에 유지되는 중. 내부는 항상 롤랑의 연구 등으로 인해 어질러져 있다.</p>
+                  <p className="text-sm text-gray-400 font-sans leading-relaxed">롤랑과 마핀 두 사람이 세운 작은 탐정 사무소. 뒷세계와 연관된 일, 연관 없는 일 전부에서 실력은 인정 받고 있으나, 롤랑의 괴짜 성향으로 인해 기피된다. 흥미로운 사건만 받으려는 롤랑에게 잔소리를 하며 다양한 의뢰를 받도록 끌고 가는 마핀 덕분에 유지되는 중. 내부는 항상 롤랑의 연구 등으로 인해 어질러져 있다.</p>
                 </div>
               </div>
             </div>
@@ -794,6 +794,14 @@ function ImageSection() {
   const [zoomLevel, setZoomLevel] = useState(1);
   const imgRef = useRef<HTMLImageElement>(null);
   const [constraints, setConstraints] = useState({ left: 0, right: 0, top: 0, bottom: 0 });
+  const [activeCategory, setActiveCategory] = useState('황혼을 넘어 달려라');
+
+  const categories = [
+    { id: '황혼을 넘어 달려라', src: 'https://s.tpvp.uk/SITE/image/image2.webp' },
+    { id: '탐정 아카데미 19th', src: 'https://s.tpvp.uk/SITE/image/collabo_image.webp' }
+  ];
+
+  const currentImage = categories.find(c => c.id === activeCategory)?.src || categories[0].src;
 
   const updateConstraints = () => {
     if (!imgRef.current) return;
@@ -850,11 +858,24 @@ function ImageSection() {
         </h3>
         <div className="w-48 md:w-80 h-[2px] bg-gradient-to-r from-transparent via-[#ffaa00] to-transparent mt-4 opacity-80 drop-shadow-[0_0_5px_rgba(255,170,0,0.8)]"></div>
       </div>
+
+      <div className="flex justify-center gap-4 mb-8">
+        {categories.map(cat => (
+          <button 
+            key={cat.id}
+            onClick={() => setActiveCategory(cat.id)} 
+            className={`biker-button !py-2 !px-6 !text-2xl ${activeCategory === cat.id ? '!bg-[#ffaa00] !text-black' : '!bg-transparent !text-gray-400 !border-gray-600 hover:!bg-white/10 hover:!text-white'}`}
+          >
+            <span>{cat.id}</span>
+          </button>
+        ))}
+      </div>
+
       <div className="max-w-7xl mx-auto biker-box !p-2 md:!p-4 bg-[#050505]">
         <div className="w-full bg-black flex flex-col items-center">
           <img 
-            src="https://s.tpvp.uk/SITE/image/image2.webp" 
-            alt="Image Gallery" 
+            src={currentImage} 
+            alt={`Image Gallery - ${activeCategory}`} 
             className="w-full h-auto object-contain cursor-pointer hover:opacity-90 transition-opacity"
             referrerPolicy="no-referrer"
             onClick={() => setIsExpanded(true)}
@@ -893,8 +914,8 @@ function ImageSection() {
               }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              src="https://s.tpvp.uk/SITE/image/image2.webp"
-              alt="Image Gallery Expanded"
+              src={currentImage}
+              alt={`Image Gallery Expanded - ${activeCategory}`}
               className="max-w-full max-h-[95vh] object-contain"
               style={{ cursor: zoomLevel > 1 ? 'grab' : 'zoom-in', touchAction: 'none' }}
               referrerPolicy="no-referrer"
